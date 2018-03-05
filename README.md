@@ -3,8 +3,6 @@ Pirate AR SDK Sample based on Google AR SDK
 
 Welcome to my addition to the Google AR SDK Demo. This demo uses the Google demo in reorganizing the code strucutre and adding some features to its base. Specifically it adds the option to render different objects in it and render a texture from an Android XML layout file in reality.
 
-Please note, we do not accept pull requests.
-
 Original Getting Started
 ========================
 
