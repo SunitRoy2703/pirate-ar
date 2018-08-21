@@ -383,7 +383,7 @@ public class AugmentedImageActivity extends AppCompatActivity implements GLSurfa
   }
 
   private Bitmap loadAugmentedImageBitmap() {
-    try (InputStream is = getAssets().open("default.jpg")) {
+    try (InputStream is = getAssets().open("cards/ace-bells.jpg")) {
       return BitmapFactory.decodeStream(is);
     } catch (IOException e) {
       Log.e(TAG, "IO exception loading augmented image bitmap.", e);
