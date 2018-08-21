@@ -1,10 +1,10 @@
 ace-acorn.png|cards/ace-acorn.png
-ace-bells.png|cards/ace-bells.png
-ace-green.png|cards/ace-green.png
-ace-red.png|cards/ace-red.png
+ace-bell.png|cards/ace-bell.png
+ace-heart.png|cards/ace-heart.png
+ace-leaf.png|cards/ace-leaf.png
 back.png|cards/back.png
 king-acorn.png|cards/king-acorn.png
-king-bells.png|cards/king-bells.png
-king-green.png|cards/king-green.png
+king-bell.png|cards/king-bell.png
 king-heart.png|cards/king-heart.png
+king-leaf.png|cards/king-leaf.png
 nine-acorn.png|cards/nine-acorn.png
