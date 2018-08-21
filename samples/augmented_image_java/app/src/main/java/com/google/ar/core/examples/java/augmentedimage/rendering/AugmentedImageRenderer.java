@@ -19,7 +19,6 @@ import android.content.Context;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.AugmentedImage;
 import com.google.ar.core.Pose;
-import com.google.ar.core.examples.java.augmentedimage.rendering.ObjectRenderer.BlendMode;
 
 import java.io.IOException;
 
@@ -48,11 +47,10 @@ public class AugmentedImageRenderer {
     renderer.createOnGlThread(
         context, modelPath, texturePath);
     renderer.setMaterialProperties(0.0f, 3.5f, 1.0f, 6.0f);
-    renderer.setBlendMode(BlendMode.SourceAlpha);
   }
 
   public void createOnGlThread(Context context) throws IOException {
-    createRendererOnGlThread(context, bellRenderer, "models/andy.obj", "models/andy.png");
+    createRendererOnGlThread(context, bellRenderer, "models/bell.obj", "models/colors.png");
     createRendererOnGlThread(context, heartRenderer, "models/heart.obj", "models/colors.png");
     createRendererOnGlThread(context, leafRenderer, "models/leaf.obj", "models/colors.png");
     createRendererOnGlThread(context, acornRenderer, "models/acorn.obj", "models/colors.png");
@@ -68,7 +66,7 @@ public class AugmentedImageRenderer {
         convertHexToColor(TINT_COLORS_HEX[augmentedImage.getIndex() % TINT_COLORS_HEX.length]);
 
     Pose anchorPose = centerAnchor.getPose();
-    float scaleFactor = 1f;
+    float scaleFactor = .4f;
     float[] modelMatrix = new float[16];
 
     anchorPose.toMatrix(modelMatrix, 0);
