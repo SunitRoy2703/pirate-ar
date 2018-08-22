@@ -19,6 +19,10 @@
     package="com.google.ar.core.examples.java.augmentedimage">
 
   <uses-permission android:name="android.permission.CAMERA"/>
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
   <!-- This tag indicates that this application requires ARCore.  This results in the application
        only being visible in the Google Play Store on devices that support ARCore. -->
   <uses-feature android:name="android.hardware.camera.ar" android:required="true"/>
@@ -32,15 +36,25 @@
       tools:ignore="GoogleAppIndexingWarning">
 
     <activity
-        android:name="com.google.ar.core.examples.java.augmentedimage.AugmentedImageActivity"
-        android:configChanges="orientation|screenSize"
-        android:exported="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar"
-        android:screenOrientation="locked">
+      android:name=".StartupActivity"
+      android:configChanges="orientation|screenSize"
+      android:exported="true"
+      android:theme="@style/Theme.AppCompat.NoActionBar"
+      android:screenOrientation="locked"
+        >
+
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
+    </activity>
+
+    <activity
+        android:name=".AugmentedImageActivity"
+        android:configChanges="orientation|screenSize"
+        android:exported="true"
+        android:theme="@style/Theme.AppCompat.NoActionBar"
+        android:screenOrientation="locked">
     </activity>
     <!-- This tag indicates that this application requires ARCore.  This results in the Google Play
          Store downloading and installing ARCore along with the application. -->

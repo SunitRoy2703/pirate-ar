@@ -20,11 +20,10 @@ import android.graphics.BitmapFactory;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
 import android.opengl.Matrix;
+
 import com.google.ar.core.examples.java.common.rendering.ShaderUtil;
-import de.javagl.obj.Obj;
-import de.javagl.obj.ObjData;
-import de.javagl.obj.ObjReader;
-import de.javagl.obj.ObjUtils;
+
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
@@ -33,7 +32,14 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
 
-/** Renders an object loaded from an OBJ file in OpenGL. */
+import de.javagl.obj.Obj;
+import de.javagl.obj.ObjData;
+import de.javagl.obj.ObjReader;
+import de.javagl.obj.ObjUtils;
+
+/**
+ * Renders an object loaded from an OBJ file in OpenGL.
+ */
 public class ObjectRenderer {
   private static final String TAG = ObjectRenderer.class.getSimpleName();
 
@@ -43,16 +49,20 @@ public class ObjectRenderer {
    * @see #setBlendMode(BlendMode)
    */
   public enum BlendMode {
-    /** Multiplies the destination color by the source alpha. */
+    /**
+     * Multiplies the destination color by the source alpha.
+     */
     Shadow,
-    /** Normal alpha blending. */
+    /**
+     * Normal alpha blending.
+     */
     SourceAlpha
   }
 
   private static final int COORDS_PER_VERTEX = 3;
 
   // Note: the last component must be zero to avoid applying the translational part of the matrix.
-  private static final float[] LIGHT_DIRECTION = new float[] {0.250f, 0.866f, 0.433f, 0.0f};
+  private static final float[] LIGHT_DIRECTION = new float[]{0.250f, 0.866f, 0.433f, 0.0f};
 
   // No tint color
   private static final float[] ZERO_COLOR_TINT = {0.0f, 0.0f, 0.0f, 0.0f}; // No tinting by default
@@ -107,20 +117,20 @@ public class ObjectRenderer {
   private float specular = 1.0f;
   private float specularPower = 6.0f;
 
-  public ObjectRenderer() {}
+  public ObjectRenderer() {
+  }
 
   /**
    * Creates and initializes OpenGL resources needed for rendering the model.
    *
-   * @param context Context for loading the shader and below-named model and texture assets.
-   * @param objAssetName Name of the OBJ file containing the model geometry.
-   * @param diffuseTextureAssetName Name of the PNG file containing the diffuse texture map.
+   * @param context     Context for loading the shader and below-named model and texture assets.
+   * @param modelPath   Name of the OBJ file containing the model geometry.
+   * @param texturePath Name of the PNG file containing the diffuse texture map.
    */
-  public void createOnGlThread(Context context, String objAssetName, String diffuseTextureAssetName)
+  public void createOnGlThread(Context context, String modelPath, String texturePath)
       throws IOException {
     // Read the texture.
-    Bitmap textureBitmap =
-        BitmapFactory.decodeStream(context.getAssets().open(diffuseTextureAssetName));
+    Bitmap textureBitmap = BitmapFactory.decodeStream(new FileInputStream(texturePath));
 
     GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
     GLES20.glGenTextures(textures.length, textures, 0);
@@ -138,7 +148,7 @@ public class ObjectRenderer {
     ShaderUtil.checkGLError(TAG, "Texture loading");
 
     // Read the obj file.
-    InputStream objInputStream = context.getAssets().open(objAssetName);
+    InputStream objInputStream = new FileInputStream(modelPath);
     Obj obj = ObjReader.read(objInputStream);
 
     // Prepare the Obj so that its structure is suitable for
@@ -259,11 +269,11 @@ public class ObjectRenderer {
   /**
    * Sets the surface characteristics of the rendered model.
    *
-   * @param ambient Intensity of non-directional surface illumination.
-   * @param diffuse Diffuse (matte) surface reflectivity.
-   * @param specular Specular (shiny) surface reflectivity.
+   * @param ambient       Intensity of non-directional surface illumination.
+   * @param diffuse       Diffuse (matte) surface reflectivity.
+   * @param specular      Specular (shiny) surface reflectivity.
    * @param specularPower Surface shininess. Larger values result in a smaller, sharper specular
-   *     highlight.
+   *                      highlight.
    */
   public void setMaterialProperties(
       float ambient, float diffuse, float specular, float specularPower) {
@@ -276,10 +286,10 @@ public class ObjectRenderer {
   /**
    * Draws the model.
    *
-   * @param cameraView A 4x4 view matrix, in column-major order.
+   * @param cameraView        A 4x4 view matrix, in column-major order.
    * @param cameraPerspective A 4x4 projection matrix, in column-major order.
-   * @param lightIntensity Illumination intensity. Combined with diffuse and specular material
-   *     properties.
+   * @param lightIntensity    Illumination intensity. Combined with diffuse and specular material
+   *                          properties.
    * @see #setBlendMode(BlendMode)
    * @see #updateModelMatrix(float[], float)
    * @see #setMaterialProperties(float, float, float, float)

@@ -15,12 +15,19 @@
 package com.google.ar.core.examples.java.augmentedimage.rendering;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.ar.core.Anchor;
 import com.google.ar.core.AugmentedImage;
 import com.google.ar.core.Pose;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Renders an augmented image.
@@ -35,10 +42,10 @@ public class AugmentedImageRenderer {
       0x009688, 0x4CAF50, 0x8BC34A, 0xCDDC39, 0xFFEB3B, 0xFFC107, 0xFF9800,
   };
 
-  private final ObjectRenderer bellRenderer = new ObjectRenderer();
-  private final ObjectRenderer heartRenderer = new ObjectRenderer();
-  private final ObjectRenderer leafRenderer = new ObjectRenderer();
-  private final ObjectRenderer acornRenderer = new ObjectRenderer();
+  private Map<String, ObjectRenderer> renderers = new HashMap<>();
+  private Map<String, ObjectRenderer> descriptors = new HashMap<>();
+
+  private final ObjectRenderer andyRenderer = new ObjectRenderer();
 
   public AugmentedImageRenderer() {
   }
@@ -50,10 +57,41 @@ public class AugmentedImageRenderer {
   }
 
   public void createOnGlThread(Context context) throws IOException {
-    createRendererOnGlThread(context, bellRenderer, "models/bell.obj", "models/colors.png");
-    createRendererOnGlThread(context, heartRenderer, "models/heart.obj", "models/colors.png");
-    createRendererOnGlThread(context, leafRenderer, "models/leaf.obj", "models/colors.png");
-    createRendererOnGlThread(context, acornRenderer, "models/acorn.obj", "models/colors.png");
+    final File rootPath = context.getExternalFilesDir(null);
+    final Path external = FileSystems.getDefault().getPath(rootPath.getAbsolutePath());
+    Files.list(external)
+        .filter(it -> it.toString().contains(".obj"))
+        .forEach(path -> {
+              final ObjectRenderer renderer = new ObjectRenderer();
+              try {
+                createRendererOnGlThread(context, renderer, path.toString(), path.toString().replace(".obj", ".png"));
+                final String fileName = path.getFileName().toString();
+                final String key = fileName.replace(".obj", "");
+                renderers.put(key, renderer);
+
+              } catch (IOException e) {
+                Log.e(TAG, "Could not render '" + path.toString() + "'", e);
+              }
+            }
+        );
+
+    Files.list(external)
+        .filter(it -> it.toString().contains(".webp"))
+        .forEach(path -> {
+              final ObjectRenderer renderer = new ObjectRenderer();
+              try {
+                createRendererOnGlThread(context, renderer, rootPath.getAbsolutePath() + File.separator + "plane.obj", path.toString());
+                final String fileName = path.getFileName().toString();
+                final String key = fileName.replace(".webp", "");
+                descriptors.put(key, renderer);
+
+              } catch (IOException e) {
+                Log.e(TAG, "Could not render '" + path.toString() + "'", e);
+              }
+            }
+        );
+
+    createRendererOnGlThread(context, andyRenderer, rootPath.getAbsolutePath() + "andy.obj", rootPath.getAbsolutePath() + "andy.png");
   }
 
   public void draw(
@@ -70,19 +108,14 @@ public class AugmentedImageRenderer {
     float[] modelMatrix = new float[16];
 
     anchorPose.toMatrix(modelMatrix, 0);
-    ObjectRenderer renderer = null;
-    if (augmentedImage.getName().endsWith("bell.png")) {
-      renderer = bellRenderer;
-    } else if (augmentedImage.getName().endsWith("heart.png")) {
-      renderer = heartRenderer;
-    } else if (augmentedImage.getName().endsWith("leaf.png")) {
-      renderer = leafRenderer;
-    } else if (augmentedImage.getName().endsWith("acorn.png")) {
-      renderer = acornRenderer;
-    }
+    final String completeKey = augmentedImage.getName().replace(".png", "");
+    final String colorKey = completeKey.substring(completeKey.indexOf('-') + 1);
 
-    if (renderer != null) {
-      draw(renderer, modelMatrix, scaleFactor, viewMatrix, projectionMatrix, colorCorrectionRgba, tintColor);
+    if (renderers.containsKey(colorKey)) {
+      draw(renderers.get(colorKey), modelMatrix, scaleFactor, viewMatrix, projectionMatrix, colorCorrectionRgba, tintColor);
+      draw(descriptors.get(completeKey), modelMatrix, scaleFactor, viewMatrix, projectionMatrix, colorCorrectionRgba, tintColor);
+    } else {
+      draw(andyRenderer, modelMatrix, scaleFactor, viewMatrix, projectionMatrix, colorCorrectionRgba, tintColor);
     }
   }
 

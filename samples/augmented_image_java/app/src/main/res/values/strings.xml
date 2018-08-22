@@ -15,5 +15,9 @@
    limitations under the License.
 -->
 <resources>
-  <string name="app_name">AugImg Java</string>
+  <string name="app_name">CARD - Contentful Augmented Reality Demo</string>
+  <string name="contentful_loading">Loading Contentful</string>
+  <string name="contentful_caching_assets">Fetching new assets ...</string>
+  <string name="contentful_updating_descriptions">Recreating Descriptions</string>
+  <string name="contentful_updating_done">done</string>
 </resources>
