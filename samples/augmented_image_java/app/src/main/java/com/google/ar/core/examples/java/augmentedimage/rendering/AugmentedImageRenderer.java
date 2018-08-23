@@ -107,7 +107,20 @@ public class AugmentedImageRenderer {
     float scaleFactor = .4f;
     float[] modelMatrix = new float[16];
 
-    anchorPose.toMatrix(modelMatrix, 0);
+    anchorPose
+        .compose(Pose.makeTranslation(
+            -0.5f * augmentedImage.getExtentX(),
+            0.0f,
+            0.0f)
+        )
+        .compose(Pose.makeRotation(
+            -45.0f,
+            1.0f,
+            0.0f,
+            0.0f
+            )
+        )
+        .toMatrix(modelMatrix, 0);
     final String completeKey = augmentedImage.getName().replace(".png", "");
     final String colorKey = completeKey.substring(completeKey.indexOf('-') + 1);
 
