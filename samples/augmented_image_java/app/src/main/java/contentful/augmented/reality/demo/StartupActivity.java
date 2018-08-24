@@ -1,4 +1,4 @@
-package com.google.ar.core.examples.java.augmentedimage;
+package contentful.augmented.reality.demo;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,7 +15,7 @@ import com.contentful.java.cda.CDAAsset;
 import com.contentful.java.cda.CDAClient;
 import com.contentful.java.cda.CDAEntry;
 import com.contentful.java.cda.CDAResource;
-import com.google.ar.core.examples.java.augmentedimage.rendering.XmlLayoutRenderer;
+import contentful.augmented.reality.demo.rendering.XmlLayoutRenderer;
 
 import java.io.File;
 import java.io.FileOutputStream;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.ar.core.examples.java.augmentedimage.DescriptionView
+<contentful.augmented.reality.demo.DescriptionView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -36,4 +36,4 @@
         tools:text="*Ace*\n_From Wikipedia, the free encyclopedia_\nAn ace is a playing card, die or domino with a single pip. In the standard French deck, an ace has a single suit symbol (a heart, diamond, spade, or club) located in the middle of the card, sometimes large and decorated, especially in the case of the ace of spades. This embellishment on the ace of spades started when King James VI of Scotland and I of England required an insignia of the printing house to be printed on the ace of spades. This insignia was necessary for identifying the printing house and stamping it as having paid the new stamp tax. Although this requirement was abolished in 1960, the tradition has been kept by many card makers. In other countries the stamp and embellishments are usually found on ace cards; clubs in France, diamonds in Russia, and hearts in Genoa because they have the most blank space."
         />
 
-</com.google.ar.core.examples.java.augmentedimage.DescriptionView>
+</contentful.augmented.reality.demo.DescriptionView>

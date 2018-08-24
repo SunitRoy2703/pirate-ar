@@ -1,4 +1,4 @@
-package com.google.ar.core.examples.java.augmentedimage.rendering;
+package contentful.augmented.reality.demo.rendering;
 
 
 import android.content.Context;

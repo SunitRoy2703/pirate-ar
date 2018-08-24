@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.ar.core.examples.java.augmentedimage;
+package contentful.augmented.reality.demo;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -39,7 +39,7 @@ import com.google.ar.core.Config;
 import com.google.ar.core.Frame;
 import com.google.ar.core.Session;
 import com.google.ar.core.TrackingState;
-import com.google.ar.core.examples.java.augmentedimage.rendering.AugmentedImageRenderer;
+import contentful.augmented.reality.demo.rendering.AugmentedImageRenderer;
 import com.google.ar.core.examples.java.common.helpers.CameraPermissionHelper;
 import com.google.ar.core.examples.java.common.helpers.DisplayRotationHelper;
 import com.google.ar.core.examples.java.common.helpers.FullScreenHelper;

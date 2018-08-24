@@ -1,11 +1,9 @@
-package com.google.ar.core.examples.java.augmentedimage;
+package contentful.augmented.reality.demo;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
