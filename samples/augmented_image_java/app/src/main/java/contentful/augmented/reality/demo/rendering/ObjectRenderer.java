@@ -21,7 +21,7 @@ import android.opengl.GLES20;
 import android.opengl.GLUtils;
 import android.opengl.Matrix;
 
-import com.google.ar.core.examples.java.common.rendering.ShaderUtil;
+import contentful.augmented.reality.demo.common.rendering.ShaderUtil;
 
 import java.io.FileInputStream;
 import java.io.IOException;
