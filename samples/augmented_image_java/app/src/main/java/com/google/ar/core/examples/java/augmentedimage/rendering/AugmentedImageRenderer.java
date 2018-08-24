@@ -105,28 +105,32 @@ public class AugmentedImageRenderer {
 
     Pose anchorPose = centerAnchor.getPose();
     float scaleFactor = .4f;
-    float[] modelMatrix = new float[16];
 
-    anchorPose
-        .compose(Pose.makeTranslation(
-            -0.5f * augmentedImage.getExtentX(),
-            0.0f,
-            0.0f)
-        )
-        .compose(Pose.makeRotation(
-            -45.0f,
-            1.0f,
-            0.0f,
-            0.0f
-            )
-        )
-        .toMatrix(modelMatrix, 0);
+    float[] modelMatrix = new float[16];
+    anchorPose.toMatrix(modelMatrix, 0);
+
     final String completeKey = augmentedImage.getName().replace(".png", "");
     final String colorKey = completeKey.substring(completeKey.indexOf('-') + 1);
 
     if (renderers.containsKey(colorKey)) {
+      float[] descriptionMatrix = new float[16];
+      anchorPose
+          .compose(Pose.makeTranslation(
+              -0.5f * augmentedImage.getExtentX(),
+              0.0f,
+              0.0f)
+          )
+          .compose(Pose.makeRotation(
+              (float) Math.PI / 4.0f,
+              0.0f,
+              0.0f,
+              1.0f)
+          )
+          .toMatrix(descriptionMatrix, 0);
+      float descriptionScaleFactor = .2f;
+
       draw(renderers.get(colorKey), modelMatrix, scaleFactor, viewMatrix, projectionMatrix, colorCorrectionRgba, tintColor);
-      draw(descriptors.get(completeKey), modelMatrix, scaleFactor, viewMatrix, projectionMatrix, colorCorrectionRgba, tintColor);
+      draw(descriptors.get(completeKey), descriptionMatrix, descriptionScaleFactor, viewMatrix, projectionMatrix, colorCorrectionRgba, tintColor);
     } else {
       draw(andyRenderer, modelMatrix, scaleFactor, viewMatrix, projectionMatrix, colorCorrectionRgba, tintColor);
     }

@@ -4,26 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_description_background"
     android:orientation="vertical"
-    android:background="@drawable/ic_background_circle"
     >
 
     <ImageView
         android:id="@+id/description_image"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:contentDescription="@null"
-        tools:src="@drawable/ic_launcher"
-        />
-
-    <ProgressBar
-        android:id="@+id/description_progress"
-        style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:max="100"
-        android:progressTint="#8080FF80"
-        tools:progress="40"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_launcher"
         />
 
     <TextView
@@ -31,7 +21,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="24sp"
+        android:textColor="@android:color/black"
+        android:textSize="32sp"
         android:textStyle="bold"
         tools:text="Ace of spades"
         />
@@ -40,6 +31,8 @@
         android:id="@+id/description_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:textSize="28sp"
         tools:text="*Ace*\n_From Wikipedia, the free encyclopedia_\nAn ace is a playing card, die or domino with a single pip. In the standard French deck, an ace has a single suit symbol (a heart, diamond, spade, or club) located in the middle of the card, sometimes large and decorated, especially in the case of the ace of spades. This embellishment on the ace of spades started when King James VI of Scotland and I of England required an insignia of the printing house to be printed on the ace of spades. This insignia was necessary for identifying the printing house and stamping it as having paid the new stamp tax. Although this requirement was abolished in 1960, the tradition has been kept by many card makers. In other countries the stamp and embellishments are usually found on ace cards; clubs in France, diamonds in Russia, and hearts in Genoa because they have the most blank space."
         />
 
