@@ -91,7 +91,7 @@ public class AugmentedImageRenderer {
             }
         );
 
-    createRendererOnGlThread(context, andyRenderer, rootPath.getAbsolutePath() + "andy.obj", rootPath.getAbsolutePath() + "andy.png");
+    createRendererOnGlThread(context, andyRenderer, rootPath.getAbsolutePath() + File.separator + "andy.obj", rootPath.getAbsolutePath() + File.separator + "andy.png");
   }
 
   public void draw(

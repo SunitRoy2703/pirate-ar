@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -49,7 +50,6 @@ public class StartupActivity extends Activity {
     setContentView(R.layout.activity_startup);
   }
 
-  @SuppressWarnings("CheckResult")
   @Override protected void onStart() {
     super.onStart();
     startWaitingAnimation();
@@ -57,6 +57,20 @@ public class StartupActivity extends Activity {
     status = findViewById(R.id.startup_status);
     status.setText(R.string.contentful_loading);
 
+    new AlertDialog
+        .Builder(this)
+        .setTitle("Update content from Contentful?")
+        .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+          update();
+        })
+        .setNegativeButton(android.R.string.no, (dialog, which) -> {
+          startMain();
+        })
+        .show();
+  }
+
+  @SuppressWarnings("CheckResult")
+  private void update() {
     contentful = CDAClient
         .builder()
         .setSpace("dg6ezrxigv9a")
@@ -180,12 +194,16 @@ public class StartupActivity extends Activity {
               updateStatus(R.string.contentful_updating_done);
 
               runOnUiThread(() -> {
-                final Intent intent = new Intent(StartupActivity.this, AugmentedImageActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+                startMain();
               });
             });
+  }
+
+  private void startMain() {
+    final Intent intent = new Intent(StartupActivity.this, AugmentedImageActivity.class);
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    startActivity(intent);
   }
 
   private void startWaitingAnimation() {
